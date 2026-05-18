@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b2545">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Deep Creek Lake, Memorial Day weekend 2026. Five families, 16 people, three days in the Maryland mountains.">
+<title>Deep Creek Lake · Memorial Day 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-deep: #061833;
+    --teal: #00a896;
+    --teal-deep: #028090;
+    --sand: #f5f1e8;
+    --cream: #faf7f1;
+    --sunset: #f08a4b;
+    --rust: #c1431c;
+    --ink: #1a1a1a;
+    --muted: #6b7280;
+    --line: #e5e0d4;
+    --card: #ffffff;
+    --green: #2f855a;
+    --amber: #b7791f;
+    --red: #c53030;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  h1, h2, h3, h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -0.01em; margin: 0; }
+  a { color: var(--teal-deep); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 70%, #041025 100%);
+    color: var(--cream);
+    padding: 32px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(0,168,150,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    color: var(--cream);
+  }
+  .hero-dates {
+    font-size: 15px;
+    color: rgba(245, 241, 232, 0.78);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+  .countdown {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .cd-cell {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 4px;
+    text-align: center;
+  }
+  .cd-num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1;
+  }
+  .cd-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-top: 4px;
+  }
+  .countdown.live .cd-num { color: var(--sunset); }
+
+  /* Property card */
+  .property {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,168,150,0.25);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 4px;
+  }
+  .property-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .property-name {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    color: var(--cream);
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+  .property-meta {
+    font-size: 13px;
+    color: rgba(245,241,232,0.7);
+  }
+  .property-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .pill {
+    flex: 1;
+    text-align: center;
+    background: rgba(0,168,150,0.15);
+    border: 1px solid rgba(0,168,150,0.35);
+    color: var(--cream);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .pill:hover { background: rgba(0,168,150,0.25); text-decoration: none; }
+
+  /* Tabs */
+  .tabs {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    flex: 1;
+    min-width: max-content;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .tab.active { color: var(--navy); border-bottom-color: var(--teal); }
+
+  /* Content */
+  .panel { display: none; padding: 20px 16px 80px; }
+  .panel.active { display: block; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  /* Day cards */
+  .day {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(11,37,69,0.04);
+  }
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+    gap: 12px;
+  }
+  .day-number {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    font-weight: 600;
+  }
+  .day-date {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .day-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 22px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .wx {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sand);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .wx-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+  .wx-dot.warm { background: var(--sunset); }
+  .wx-dot.hot { background: var(--rust); }
+  .wx-dot.cool { background: var(--teal-deep); }
+
+  .slot {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+  }
+  .slot:first-of-type { border-top: none; padding-top: 0; }
+  .slot-time {
+    flex: 0 0 56px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    color: var(--teal-deep);
+    font-size: 14px;
+    padding-top: 2px;
+  }
+  .slot-body { flex: 1; }
+  .slot-title {
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+  .slot-detail {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+  }
+  .slot-detail .note {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* Callouts */
+  .callout {
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid;
+  }
+  .callout-warn {
+    background: #fef6e7;
+    border-color: #e8c87a;
+    color: #6b4818;
+  }
+  .callout-info {
+    background: #e8f5f4;
+    border-color: #9dd3ce;
+    color: #134e4a;
+  }
+  .callout-sunset {
+    background: #fdf0e3;
+    border-color: #f5be8d;
+    color: #8a3a14;
+  }
+  .callout strong { color: inherit; }
+
+  /* Tap rows */
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    gap: 12px;
+  }
+  .row:first-child { border-top: none; }
+  .row-label {
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+  .row-sub {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .row-action {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .row-action:hover { background: var(--teal-deep); text-decoration: none; }
+  .row-action.alt { background: var(--teal); }
+  .row-action.alt:hover { background: var(--teal-deep); }
+
+  /* Lists */
+  .list-tight {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .list-tight li {
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .list-tight li:first-child { border-top: none; }
+  .list-tight strong { color: var(--navy); }
+
+  .stack { display: grid; gap: 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .card h3 {
+    font-size: 18px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* Status chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .chip-go { background: #dcfce7; color: var(--green); }
+  .chip-hold { background: #fef3c7; color: var(--amber); }
+  .chip-stop { background: #fee2e2; color: var(--red); }
+
+  /* Footer */
+  footer {
+    padding: 28px 20px 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+  }
+
+  @media (min-width: 720px) {
+    .hero { padding: 48px 32px 32px; }
+    .hero h1 { font-size: 40px; }
+    .panel { padding: 32px 32px 80px; max-width: 760px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">Memorial Day Weekend · 2026</div>
+  <h1>Deep Creek Lake</h1>
+  <div class="hero-dates">Saturday May 23 → Monday May 25</div>
+
+  <div class="countdown" id="countdown" aria-live="polite">
+    <div class="cd-cell"><div class="cd-num" id="cd-d">--</div><div class="cd-label">days</div></div>
+    <div class="cd-cell"><div class="cd-num" id="cd-h">--</div><div class="cd-label">hours</div></div>
+    <div class="cd-cell"><div class="cd-num" id="cd-m">--</div><div class="cd-label">min</div></div>
+    <div class="cd-cell"><div class="cd-num" id="cd-s">--</div><div class="cd-label">sec</div></div>
+  </div>
+
+  <div class="property">
+    <div class="property-label">The Cabin</div>
+    <div class="property-name">Luxury 7BR Cabin · North Camp at Wisp</div>
+    <div class="property-meta">7 BR · 8 beds · 6.5 baths · sleeps 16+ · hot tub · fire pit · pool table · game room</div>
+    <div class="property-actions">
+      <a class="pill" href="https://www.airbnb.com/rooms/1576450755526446469" target="_blank" rel="noopener">View listing</a>
+      <a class="pill" href="https://maps.apple.com/?q=North+Camp+Wisp+Resort+McHenry+MD" target="_blank" rel="noopener">Map area</a>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-tab="plan" role="tab">The Plan</button>
+  <button class="tab" data-tab="route" role="tab">Route &amp; Stops</button>
+  <button class="tab" data-tab="practical" role="tab">Practical</button>
+</nav>
+
+<!-- ============ PLAN ============ -->
+<section class="panel active" id="plan" role="tabpanel">
+
+  <div class="section-eyebrow">Three Days · Mountain Basecamp</div>
+  <h2 class="section-title">The Plan</h2>
+  <p class="section-sub">Five families. 10 adults, 6 kids. Cabin sleeps everyone. Wisp Resort summer activities and a forest hike at the heart of it.</p>
+
+  <div class="callout callout-info">
+    <strong>Property note:</strong> This cabin is <strong>mountain not lakefront</strong> — ski-in / ski-out near Wisp slopes, 5–10 min drive to Deep Creek Lake water access. Hot tub, fire pit, pool table, game room are all on-site.
+  </div>
+
+  <!-- DAY 1 -->
+  <article class="day">
+    <div class="day-header">
+      <span class="day-number">Day 1 · Travel + Settle</span>
+      <span class="day-date">Sat May 23</span>
+    </div>
+    <h3 class="day-title">Get there, drop bags, hot tub, fire pit.</h3>
+    <span class="wx"><span class="wx-dot warm"></span>Mostly sunny · mid 70s / mid 50s · isolated PM storms</span>
+
+    <div class="slot">
+      <div class="slot-time">9:00 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Leave Brambleton</div>
+        <div class="slot-detail">~3 hr 10 min via I-66 W → I-81 N → I-68 W. Memorial Day Saturday — leave by 9 AM to beat the I-66 wave west. Caravan or stagger by 15 min.<span class="note">~180 miles. One stop in the middle.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">12:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Lunch stop · Sheetz, Cumberland MD</div>
+        <div class="slot-detail">Halfway point off I-68 Exit 43A. Made-to-order subs, hot food, clean bathrooms, easy parking for the caravan. 30–40 min. Kids stretch their legs.<span class="note">Skip downtown Cumberland on Memorial Day Saturday — restaurants will be slammed.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">2:30 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Walmart McHenry · grocery run</div>
+        <div class="slot-detail">2 mi from cabin. Hit it <strong>before</strong> check-in to beat the 5 PM Memorial Day rush. One car, two adults from the group go in with the list. Everyone else can drive straight to the cabin and stage at the entrance.<span class="note">Indian pantry staples (curry leaves, ginger garlic paste, asafoetida, sambar powder) <strong>must come from home</strong> — Walmart McHenry will not stock them.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">4:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Cabin check-in · self check-in with smartlock</div>
+        <div class="slot-detail">Host code arrives by Airbnb message the morning of. Unload, claim bedrooms, kids run the property — 7 BR + game area = let them blow off steam.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">6:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Group dinner · cook in</div>
+        <div class="slot-detail">First night = comfort food. Pre-marinate at home, finish on the grill or stovetop here. Roti, dal, sabzi, rice. Adults take turns; kids self-serve.<span class="note">Two cooks rotate. Everyone else handles cleanup so the cooks get to sit down.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">8:30 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Fire pit + hot tub</div>
+        <div class="slot-detail">Sunset 8:25 PM. Light the fire pit, set the kids up with s'mores, adults rotate through the hot tub. Star count is high — Garrett County has dark skies.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- DAY 2 -->
+  <article class="day">
+    <div class="day-header">
+      <span class="day-number">Day 2 · Main Event</span>
+      <span class="day-date">Sun May 24</span>
+    </div>
+    <h3 class="day-title">Forest hike, Wisp Mountain Park, cookout.</h3>
+    <span class="wx"><span class="wx-dot warm"></span>Partly sunny · upper 70s / upper 50s · slight chance PM storms</span>
+
+    <div class="slot">
+      <div class="slot-time">8:00 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Slow breakfast at the cabin</div>
+        <div class="slot-detail">Eggs, toast, fruit, coffee on the deck. No rush — the hike is 10 min away.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">10:00 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Hike · Cherry Creek Loop</div>
+        <div class="slot-detail"><strong>2.8 mi loop · moderate · 370 ft gain · 4.7 stars on AllTrails.</strong> Forest and lake views at Deep Creek Lake State Park. Kid-tagged. Trailhead 3.6 mi (8 min) from cabin. Plan ~90 min hiking + buffer.<span class="note">Bring water bottles, bug spray, snacks. One adult per 2 kids minimum on the loop.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">12:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Lunch back at the cabin</div>
+        <div class="slot-detail">Sandwiches, fruit, chips. Kids nap or settle. Adults stage afternoon at Wisp.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">2:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Wisp Mountain Park · 10 AM–5 PM</div>
+        <div class="slot-detail"><strong>0.5 mi from cabin.</strong> Mountain Coaster, Scenic Chairlift, Mini Golf, Gem Mining, Archery, Disc Golf, Chipmunk Challenge (younger kids) and Spider Monkey Adventure (older kids). Kids Zone with inflatable obstacle course 12–6 PM. Farm + Art Market 12–6 PM. Live music on the main stage.<span class="note">Buy a multi-activity pass at the lodge — cheaper than à la carte. Stay flexible: if a kid melts down, the cabin is 5 min away.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">6:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Backyard cookout</div>
+        <div class="slot-detail">Grill night. Marinated paneer tikka, veg kebabs, corn, salad. Beer garden vibe at home — no waitlist for 16.<span class="note">Memorial Day weekend Saturday + Sunday dinner at any McHenry restaurant for a party of 16 with kids = miserable. Cook in.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">8:30 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Pool tournament + fire pit</div>
+        <div class="slot-detail">Adults bracket on the pool table. Kids on s'mores duty at the fire. Hot tub queue.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- DAY 3 -->
+  <article class="day">
+    <div class="day-header">
+      <span class="day-number">Day 3 · Wind Down + Drive</span>
+      <span class="day-date">Mon May 25 · Memorial Day</span>
+    </div>
+    <h3 class="day-title">Lazy morning. Out by 10. Home by 2.</h3>
+    <span class="wx"><span class="wx-dot hot"></span>Sunny · low 80s / low 60s · slight chance PM storms after 2 PM</span>
+
+    <div class="slot">
+      <div class="slot-time">7:30 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Pack + breakfast</div>
+        <div class="slot-detail">Bags down by 9. Light breakfast — leftovers, fruit, coffee. Quick walk on the property if energy is up.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">10:00 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Checkout · 10 AM sharp</div>
+        <div class="slot-detail">Self-checkout. Trash bagged, dishwasher running, beds left as-is unless host instructions say otherwise.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">10:30 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Drive home · ~3 hr 15 min</div>
+        <div class="slot-detail">Reverse the route: I-68 E → I-81 S → I-66 E → Brambleton. Beat the Memorial Day evening crush by leaving on time.<span class="note">Optional Memorial Day stop: Antietam National Battlefield (Sharpsburg MD, off I-70). 30 min detour, free entry, walkable visitor center. Adds ~90 min total. Skip if kids are toast.</span></div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">12:30 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Lunch stop · Sheetz Hagerstown or pack from cabin</div>
+        <div class="slot-detail">Same Sheetz playbook on the way back. Or pack leftover roti rolls and snacks from the cabin and just push through.</div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="slot-time">2:00 PM</div>
+      <div class="slot-body">
+        <div class="slot-title">Home</div>
+        <div class="slot-detail">Unload essentials only. Order pizza. Bath. Bed. Done.</div>
+      </div>
+    </div>
+  </article>
+
+  <div class="callout callout-warn">
+    <strong>Wet weather plan.</strong> If Sunday turns rainy: skip the hike, go to <strong>Wisp Resort Escape Rooms</strong> at McHenry Lodge (Race to the Slopes, Detention Breakout — great for kids 8+). Mountain Coaster runs in light rain. Pool table, game room, hot tub eat the rest of the day at the cabin.
+  </div>
+
+</section>
+
+<!-- ============ ROUTE ============ -->
+<section class="panel" id="route" role="tabpanel">
+
+  <div class="section-eyebrow">180 miles · 3 hours 10 min</div>
+  <h2 class="section-title">Route &amp; Stops</h2>
+  <p class="section-sub">Brambleton VA → McHenry MD. Tap any row to open in Maps or call.</p>
+
+  <div class="card">
+    <h3>The drive</h3>
+    <p class="card-sub">I-66 W → I-81 N → I-68 W to Exit 14A (US-219 S)</p>
+    <ul class="list-tight">
+      <li><strong>I-66 W to Front Royal</strong> · ~60 min. Get on by 9 AM Saturday or pay the price.</li>
+      <li><strong>I-81 N to Hancock MD</strong> · ~60 min. Easy cruise. Bathroom break at the I-81 / I-70 split if needed.</li>
+      <li><strong>I-68 W to McHenry</strong> · ~70 min. Climbs into the Alleghenies. Scenic last 30 min.</li>
+      <li><strong>US-219 S → Marsh Hill Rd</strong> · last 10 min into North Camp.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Stops along the way</h3>
+    <p class="card-sub">Outbound Saturday</p>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Sheetz · Cumberland MD</div>
+        <div class="row-sub">Lunch + bathroom · halfway · Exit 43A I-68</div>
+      </div>
+      <a class="row-action" href="https://maps.apple.com/?q=Sheetz+Cumberland+MD+I-68+Exit+43A" target="_blank" rel="noopener">Maps</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Walmart McHenry</div>
+        <div class="row-sub">19741 Garrett Hwy · grocery run · 2 mi from cabin</div>
+      </div>
+      <a class="row-action" href="https://maps.apple.com/?q=Walmart+19741+Garrett+Hwy+Oakland+MD" target="_blank" rel="noopener">Maps</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Cabin · North Camp at Wisp</div>
+        <div class="row-sub">Exact address in Airbnb message · check-in 4 PM</div>
+      </div>
+      <a class="row-action" href="https://www.airbnb.com/rooms/1576450755526446469" target="_blank" rel="noopener">Listing</a>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Activity locations</h3>
+    <p class="card-sub">All within 10 min of the cabin</p>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Cherry Creek Loop trailhead</div>
+        <div class="row-sub">Deep Creek Lake State Park · 3.6 mi · 8 min</div>
+      </div>
+      <a class="row-action" href="https://maps.apple.com/?q=Deep+Creek+Lake+State+Park+898+State+Park+Rd+Swanton+MD" target="_blank" rel="noopener">Maps</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Wisp Resort · Mountain Park</div>
+        <div class="row-sub">296 Marsh Hill Rd · 0.5 mi · 2 min</div>
+      </div>
+      <a class="row-action" href="https://maps.apple.com/?q=Wisp+Resort+296+Marsh+Hill+Rd+McHenry+MD" target="_blank" rel="noopener">Maps</a>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="row-label">Deep Creek Lake State Park · beach</div>
+        <div class="row-sub">Separate trip if water is warm enough · 10 min</div>
+      </div>
+      <a class="row-action" href="https://maps.apple.com/?q=Deep+Creek+Lake+State+Park+beach" target="_blank" rel="noopener">Maps</a>
+    </div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:16px;">
+    <strong>Swallow Falls is closed.</strong> Maryland's iconic waterfall hike has been shut for bridge construction since March 9, 2026. Paving project runs May 1 → Dec 2. If anyone suggests it, redirect to Cherry Creek Loop. Day-use access may have partially reopened — only worth checking by calling Herrington Manor at <a href="tel:+13013349180">301-334-9180</a> the Friday before.
+  </div>
+
+  <div class="callout callout-sunset" style="margin-top:16px;">
+    <strong>Optional Monday stop.</strong> <strong>Antietam National Battlefield</strong> (Sharpsburg MD, off I-70) is on the way home and free. Quiet, walkable, Memorial Day–appropriate. 30 min detour, adds ~90 min total. Only if kids still have energy.
+  </div>
+
+</section>
+
+<!-- ============ PRACTICAL ============ -->
+<section class="panel" id="practical" role="tabpanel">
+
+  <div class="section-eyebrow">Logistics · Packing · Contacts</div>
+  <h2 class="section-title">Practical</h2>
+  <p class="section-sub">The boring stuff that makes the trip work.</p>
+
+  <div class="stack">
+
+    <div class="card">
+      <h3>Weather · first read</h3>
+      <p class="card-sub">Refresh by Thursday May 21. Forecasts sharpen inside 3 days.</p>
+      <ul class="list-tight">
+        <li><strong>Sat May 23</strong> · Mostly sunny · 75°F / 55°F · isolated PM showers · light SW wind. <span class="chip chip-go">go</span></li>
+        <li><strong>Sun May 24</strong> · Partly sunny · 79°F / 58°F · slight PM storm chance · hike-friendly. <span class="chip chip-go">go</span></li>
+        <li><strong>Mon May 25</strong> · Sunny · 82°F / 62°F · PM storms possible after 2 PM. <span class="chip chip-go">go</span></li>
+      </ul>
+      <div class="callout callout-info" style="margin-top:12px; margin-bottom:0;">
+        <strong>Mountain reality.</strong> Elevation 2,500 ft. Mornings will feel cool (50s). Lake water still ~62°F — short dips only, kids won't last. Sunrise ~6:00 AM, sunset ~8:26 PM. Pack a light fleece per person.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Pack from home</h3>
+      <p class="card-sub">Stuff Walmart McHenry will not carry</p>
+      <ul class="list-tight">
+        <li><strong>Indian pantry:</strong> curry leaves, ginger garlic paste, asafoetida, sambar powder, rasam powder, mustard seeds, dal, atta, chana, rice if you're picky.</li>
+        <li><strong>Pre-marinated proteins / paneer / readymade rotis</strong> in a cooler — saves an hour of prep Saturday night.</li>
+        <li><strong>Spice tin + pressure cooker</strong> if the cabin kitchen lacks one. (Most do not.)</li>
+        <li><strong>Kid gear:</strong> swimsuits, water shoes, light jackets (mountain mornings), small backpacks for the hike.</li>
+        <li><strong>Bug spray</strong> — black flies and ticks active in May at elevation.</li>
+        <li><strong>Cards, board games, soccer ball</strong> for fire pit / lawn time.</li>
+        <li><strong>S'mores kit:</strong> Hershey's, marshmallows, graham crackers, long roasting sticks (3 minimum).</li>
+        <li><strong>Reusable water bottles</strong> per person.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Grocery list · Walmart McHenry stop</h3>
+      <p class="card-sub">Two adults from the group · 45 min in and out</p>
+      <ul class="list-tight">
+        <li><strong>Breakfast (2 mornings):</strong> eggs (3 dozen), bread, butter, jam, fruit (bananas, berries, apples), milk, coffee, tea, chai supplies if you forgot.</li>
+        <li><strong>Lunch fixings:</strong> sandwich bread, cheese, veggies (lettuce, tomato, cucumber), hummus, chips, pickles.</li>
+        <li><strong>Sunday cookout:</strong> paneer, onions, bell peppers, mushrooms, corn (6 ears), tortillas, naan, salad mix.</li>
+        <li><strong>Drinks:</strong> bottled water (2 cases), juice for kids, beer / wine for adults.</li>
+        <li><strong>Snacks:</strong> trail mix, granola bars, fruit, popcorn, ice cream, chips.</li>
+        <li><strong>Paper goods:</strong> paper plates (heavy duty), napkins, foil, ziploc bags, dishwasher pods if cabin runs out.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Contacts</h3>
+      <p class="card-sub">Tap to call</p>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Airbnb host (Fairly)</div>
+          <div class="row-sub">Smart-lock code · maintenance · checkout questions</div>
+        </div>
+        <a class="row-action alt" href="https://www.airbnb.com/contact_host/1576450755526446469/send_message" target="_blank" rel="noopener">Message</a>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Wisp Resort main</div>
+          <div class="row-sub">Mountain Park activities · ticketing</div>
+        </div>
+        <a class="row-action" href="tel:+18555365428">Call</a>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Herrington Manor SP</div>
+          <div class="row-sub">Trail closures · Swallow Falls status</div>
+        </div>
+        <a class="row-action" href="tel:+13013349180">Call</a>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Garrett County 911</div>
+          <div class="row-sub">Emergency</div>
+        </div>
+        <a class="row-action" href="tel:911">911</a>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Garrett Regional Medical Center</div>
+          <div class="row-sub">Oakland MD · 25 min from cabin</div>
+        </div>
+        <a class="row-action" href="tel:+13015331000">Call</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>House rules · key facts</h3>
+      <ul class="list-tight">
+        <li><strong>Check-in:</strong> after 4 PM Saturday · self check-in with smartlock</li>
+        <li><strong>Checkout:</strong> before 10 AM Monday</li>
+        <li><strong>No pets</strong></li>
+        <li><strong>Sleeps 16+</strong> · 7 bedrooms, 8 beds, 6.5 baths</li>
+        <li><strong>Quiet hours:</strong> assume 10 PM in a residential community</li>
+        <li><strong>Self check-in:</strong> code arrives in Airbnb message morning of</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>This week · before departure</h3>
+      <ul class="list-tight">
+        <li><strong>Tue May 19:</strong> finalize who's bringing what Indian pantry items — avoid duplicates.</li>
+        <li><strong>Wed May 20:</strong> confirm caravan plan — who's driving with whom, who's leaving when.</li>
+        <li><strong>Thu May 21:</strong> refresh weather forecast. Lock Sunday plan.</li>
+        <li><strong>Thu May 21:</strong> call Herrington Manor if anyone still wants Swallow Falls.</li>
+        <li><strong>Fri May 22:</strong> pack coolers · pre-marinate Saturday dinner · charge devices · download maps offline.</li>
+        <li><strong>Fri May 22 evening:</strong> early to bed. 9 AM departure means 6:30 AM wake-up for everyone.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Built for the families · Memorial Day 2026 · Deep Creek Lake
+</footer>
+
+<script>
+  // Tabs
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }));
+
+  // Countdown to Sat May 23 2026 9:00 AM ET
+  const target = new Date('2026-05-23T09:00:00-04:00').getTime();
+  const cd = { d: document.getElementById('cd-d'), h: document.getElementById('cd-h'), m: document.getElementById('cd-m'), s: document.getElementById('cd-s') };
+  const wrap = document.getElementById('countdown');
+
+  function tick() {
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+    if (diff === 0) {
+      wrap.classList.add('live');
+      cd.d.textContent = '0'; cd.h.textContent = '0'; cd.m.textContent = '0'; cd.s.textContent = 'GO';
+      return;
+    }
+    const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+    const h = Math.floor(diff / 3600000);  diff -= h * 3600000;
+    const m = Math.floor(diff / 60000);    diff -= m * 60000;
+    const s = Math.floor(diff / 1000);
+    cd.d.textContent = d;
+    cd.h.textContent = String(h).padStart(2,'0');
+    cd.m.textContent = String(m).padStart(2,'0');
+    cd.s.textContent = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // Offline-friendly: log that we're ready
+  if ('serviceWorker' in navigator) {
+    // No SW registered, but on first load the browser will cache the inline page resources.
+  }
+</script>
+
+</body>
+</html>
