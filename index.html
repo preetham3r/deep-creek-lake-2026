@@ -421,6 +421,77 @@
     .hero h1 { font-size: 40px; }
     .panel { padding: 32px 32px 80px; max-width: 760px; margin: 0 auto; }
   }
+
+  /* Nav chooser modal */
+  .nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 24, 51, 0.55);
+    z-index: 100;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .nav-overlay.open { display: flex; }
+  .nav-sheet {
+    background: var(--cream);
+    width: 100%;
+    max-width: 480px;
+    border-radius: 18px 18px 0 0;
+    padding: 22px 18px calc(20px + env(safe-area-inset-bottom));
+    animation: slideUp 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .nav-sheet h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .nav-sub-text {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 16px;
+    line-height: 1.4;
+  }
+  .nav-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .nav-option:hover { border-color: var(--teal); text-decoration: none; }
+  .nav-option .opt-sub {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .nav-cancel {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 14px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+  }
 </style>
 </head>
 <body>
@@ -442,7 +513,7 @@
     <div class="property-name">Luxury 7BR Cabin · North Camp at Wisp</div>
     <div class="property-meta">98 Summer Camp Lane · McHenry, MD 21541<br>7 BR · 8 beds · 6.5 baths · sleeps 16+ · hot tub · fire pit · pool table</div>
     <div class="property-actions">
-      <a class="pill" href="https://maps.google.com/?q=98+Summer+Camp+Lane+McHenry+MD+21541" target="_blank" rel="noopener">Navigate</a>
+      <a class="pill nav-trigger" href="#" data-q="98 Summer Camp Lane, McHenry, MD 21541" data-label="The Cabin · 98 Summer Camp Lane, McHenry MD">Navigate</a>
       <a class="pill" href="https://www.airbnb.com/rooms/1576450755526446469" target="_blank" rel="noopener">Listing</a>
     </div>
   </div>
@@ -710,7 +781,7 @@
         <div class="row-label">Sheetz · Cumberland MD</div>
         <div class="row-sub">Lunch + bathroom · halfway · Exit 43A I-68</div>
       </div>
-      <a class="row-action" href="https://maps.apple.com/?q=Sheetz+Cumberland+MD+I-68+Exit+43A" target="_blank" rel="noopener">Maps</a>
+      <a class="row-action nav-trigger" href="#" data-q="Sheetz Cumberland MD I-68 Exit 43A" data-label="Sheetz · Cumberland MD · I-68 Exit 43A">Maps</a>
     </div>
 
     <div class="row">
@@ -718,7 +789,7 @@
         <div class="row-label">Walmart McHenry</div>
         <div class="row-sub">19741 Garrett Hwy · grocery run · 2 mi from cabin</div>
       </div>
-      <a class="row-action" href="https://maps.apple.com/?q=Walmart+19741+Garrett+Hwy+Oakland+MD" target="_blank" rel="noopener">Maps</a>
+      <a class="row-action nav-trigger" href="#" data-q="Walmart 19741 Garrett Hwy Oakland MD 21550" data-label="Walmart · 19741 Garrett Hwy, McHenry MD">Maps</a>
     </div>
 
     <div class="row">
@@ -726,7 +797,7 @@
         <div class="row-label">Cabin · 98 Summer Camp Lane</div>
         <div class="row-sub">McHenry MD 21541 · North Camp at Wisp · check-in 4 PM Friday</div>
       </div>
-      <a class="row-action" href="https://maps.google.com/?q=98+Summer+Camp+Lane+McHenry+MD+21541" target="_blank" rel="noopener">Navigate</a>
+      <a class="row-action nav-trigger" href="#" data-q="98 Summer Camp Lane, McHenry, MD 21541" data-label="The Cabin · 98 Summer Camp Lane, McHenry MD">Navigate</a>
     </div>
   </div>
 
@@ -739,7 +810,7 @@
         <div class="row-label">Cherry Creek Loop trailhead</div>
         <div class="row-sub">Deep Creek Lake State Park · 3.6 mi · 8 min</div>
       </div>
-      <a class="row-action" href="https://maps.apple.com/?q=Deep+Creek+Lake+State+Park+898+State+Park+Rd+Swanton+MD" target="_blank" rel="noopener">Maps</a>
+      <a class="row-action nav-trigger" href="#" data-q="Deep Creek Lake State Park 898 State Park Rd Swanton MD" data-label="Cherry Creek Loop Trailhead · Deep Creek Lake State Park">Maps</a>
     </div>
 
     <div class="row">
@@ -747,7 +818,7 @@
         <div class="row-label">Wisp Resort · Mountain Park</div>
         <div class="row-sub">296 Marsh Hill Rd · 0.5 mi · 2 min</div>
       </div>
-      <a class="row-action" href="https://maps.apple.com/?q=Wisp+Resort+296+Marsh+Hill+Rd+McHenry+MD" target="_blank" rel="noopener">Maps</a>
+      <a class="row-action nav-trigger" href="#" data-q="Wisp Resort 296 Marsh Hill Rd McHenry MD 21541" data-label="Wisp Resort · 296 Marsh Hill Rd, McHenry MD">Maps</a>
     </div>
 
     <div class="row">
@@ -755,7 +826,7 @@
         <div class="row-label">Deep Creek Lake State Park · beach</div>
         <div class="row-sub">Separate trip if water is warm enough · 10 min</div>
       </div>
-      <a class="row-action" href="https://maps.apple.com/?q=Deep+Creek+Lake+State+Park+beach" target="_blank" rel="noopener">Maps</a>
+      <a class="row-action nav-trigger" href="#" data-q="Deep Creek Lake State Park beach 898 State Park Rd Swanton MD" data-label="Deep Creek Lake State Park · Beach Area">Maps</a>
     </div>
   </div>
 
@@ -844,7 +915,7 @@
         <li><strong>Best shore spot:</strong> <strong>Cherry Creek Cove</strong> — on the Sunday hike loop. Pack a rod in the car.</li>
         <li><strong>Backup spots:</strong> Deep Creek Lake State Park beach, Rt. 219 bridge access on Lake Shore Drive.</li>
         <li><strong>Tackle to pack:</strong> rods + small box of senkos / spinnerbaits / bobber + worm setup for kids.</li>
-        <li><strong>Tackle / bait shop:</strong> <a href="https://maps.apple.com/?q=Johnnys+Bait+House+Garrett+Hwy+McHenry+MD" target="_blank" rel="noopener">Johnny's Bait House</a> · Garrett Hwy · 5 min from cabin.</li>
+        <li><strong>Tackle / bait shop:</strong> <a href="#" class="nav-trigger" data-q="Johnnys Bait House Garrett Hwy McHenry MD" data-label="Johnny's Bait House · Garrett Hwy, McHenry MD">Johnny's Bait House</a> · Garrett Hwy · 5 min from cabin.</li>
         <li><strong>Skip the boat:</strong> Bill's Marine Service rents fishing boats $300–400/day but a $400 boat block isn't worth it for this trip. Cherry Creek Cove from shore is enough.</li>
         <li><strong>Skip the trout stamp</strong> — extra $30, only needed for trout, not necessary here.</li>
       </ul>
@@ -929,6 +1000,17 @@
   Built for the families · Memorial Day 2026 · Deep Creek Lake
 </footer>
 
+<div class="nav-overlay" id="navOverlay" role="dialog" aria-modal="true" aria-labelledby="navTitle">
+  <div class="nav-sheet">
+    <h4 id="navTitle">Open in...</h4>
+    <p class="nav-sub-text" id="navDest"></p>
+    <a class="nav-option" id="navApple" target="_blank" rel="noopener">Apple Maps<span class="opt-sub">Default on iPhone</span></a>
+    <a class="nav-option" id="navGoogle" target="_blank" rel="noopener">Google Maps<span class="opt-sub">Best on Android, works everywhere</span></a>
+    <a class="nav-option" id="navWaze" target="_blank" rel="noopener">Waze<span class="opt-sub">Live traffic + speed traps</span></a>
+    <button class="nav-cancel" id="navCancel">Cancel</button>
+  </div>
+</div>
+
 <script>
   // Tabs
   const tabs = document.querySelectorAll('.tab');
@@ -970,6 +1052,37 @@
   if ('serviceWorker' in navigator) {
     // No SW registered, but on first load the browser will cache the inline page resources.
   }
+
+  // Nav chooser modal
+  const navOverlay = document.getElementById('navOverlay');
+  const navDest = document.getElementById('navDest');
+  const navApple = document.getElementById('navApple');
+  const navGoogle = document.getElementById('navGoogle');
+  const navWaze = document.getElementById('navWaze');
+  const navCancel = document.getElementById('navCancel');
+
+  function openNav(q, label) {
+    navDest.textContent = label || q;
+    const encoded = encodeURIComponent(q);
+    navApple.href = `https://maps.apple.com/?q=${encoded}`;
+    navGoogle.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+    navWaze.href = `https://waze.com/ul?q=${encoded}&navigate=yes`;
+    navOverlay.classList.add('open');
+  }
+  function closeNav() {
+    navOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.nav-trigger').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      openNav(el.dataset.q, el.dataset.label);
+    });
+  });
+  navOverlay.addEventListener('click', e => { if (e.target === navOverlay) closeNav(); });
+  navCancel.addEventListener('click', closeNav);
+  [navApple, navGoogle, navWaze].forEach(el => el.addEventListener('click', () => setTimeout(closeNav, 100)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 </script>
 
 </body>
