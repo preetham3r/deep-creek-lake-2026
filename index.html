@@ -864,16 +864,16 @@
   <div class="stack">
 
     <div class="card">
-      <h3>Weather · first read</h3>
-      <p class="card-sub">Refresh by Wednesday May 20. Forecasts sharpen inside 3 days.</p>
-      <ul class="list-tight">
-        <li><strong>Fri May 22</strong> · Mostly sunny · 74°F / 53°F · light winds · easy travel day. <span class="chip chip-go">go</span></li>
-        <li><strong>Sat May 23</strong> · Mostly sunny · 75°F / 55°F · isolated PM showers · light SW wind. <span class="chip chip-go">go</span></li>
-        <li><strong>Sun May 24</strong> · Partly sunny · 79°F / 58°F · slight PM storm chance · hike-friendly. <span class="chip chip-go">go</span></li>
-        <li><strong>Mon May 25</strong> · Sunny · 82°F / 62°F · PM storms possible after 2 PM. <span class="chip chip-go">go</span></li>
+      <h3>Weather · live forecast</h3>
+      <p class="card-sub" id="weather-status">Loading from National Weather Service...</p>
+      <ul class="list-tight" id="weather-list">
+        <li><strong>Fri May 22</strong> · loading...</li>
+        <li><strong>Sat May 23</strong> · loading...</li>
+        <li><strong>Sun May 24</strong> · loading...</li>
+        <li><strong>Mon May 25</strong> · loading...</li>
       </ul>
       <div class="callout callout-info" style="margin-top:12px; margin-bottom:0;">
-        <strong>Mountain reality.</strong> Elevation 2,500 ft. Mornings will feel cool (50s). Lake water still ~62°F — short dips only, kids won't last. Sunrise ~6:00 AM, sunset ~8:26 PM. Pack a light fleece per person.
+        <strong>Mountain reality.</strong> Elevation 2,500 ft. Expect mornings 10–15°F cooler than the daily high — pack a light fleece per person. Lake water still ~62°F — short dips only. Sunrise ~6:00 AM, sunset ~8:26 PM.
       </div>
     </div>
 
@@ -1083,6 +1083,95 @@
   navCancel.addEventListener('click', closeNav);
   [navApple, navGoogle, navWaze].forEach(el => el.addEventListener('click', () => setTimeout(closeNav, 100)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+  // Live weather from National Weather Service · fetches on page load
+  async function loadLiveWeather() {
+    const statusEl = document.getElementById('weather-status');
+    const listEl = document.getElementById('weather-list');
+
+    // McHenry MD coordinates · near the cabin
+    const LAT = 39.5663;
+    const LON = -79.3697;
+
+    const tripDates = [
+      { iso: '2026-05-22', label: 'Fri May 22' },
+      { iso: '2026-05-23', label: 'Sat May 23' },
+      { iso: '2026-05-24', label: 'Sun May 24' },
+      { iso: '2026-05-25', label: 'Mon May 25' }
+    ];
+
+    function chipFor(desc, pop) {
+      const t = (desc || '').toLowerCase();
+      if (t.includes('storm') || t.includes('thunderstorm')) return { cls: 'chip-hold', label: 'watch' };
+      if (t.includes('rain') || t.includes('shower') || (pop && pop > 50)) return { cls: 'chip-hold', label: 'watch' };
+      return { cls: 'chip-go', label: 'go' };
+    }
+
+    function formatAgo(iso) {
+      const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins} min ago`;
+      if (mins < 1440) return `${Math.floor(mins / 60)} hr ago`;
+      return `${Math.floor(mins / 1440)} day ago`;
+    }
+
+    try {
+      const pointsRes = await fetch(`https://api.weather.gov/points/${LAT},${LON}`, {
+        headers: { 'Accept': 'application/geo+json' }
+      });
+      if (!pointsRes.ok) throw new Error('points');
+      const points = await pointsRes.json();
+
+      const forecastRes = await fetch(points.properties.forecast, {
+        headers: { 'Accept': 'application/geo+json' }
+      });
+      if (!forecastRes.ok) throw new Error('forecast');
+      const forecast = await forecastRes.json();
+
+      const periods = forecast.properties.periods;
+      const rows = tripDates.map(d => {
+        const day = periods.find(p => p.isDaytime && p.startTime.startsWith(d.iso));
+        const night = periods.find(p => !p.isDaytime && p.startTime.startsWith(d.iso));
+
+        if (!day) {
+          return `<li><strong>${d.label}</strong> · <span style="color:var(--muted)">forecast not yet available — check back closer to trip</span></li>`;
+        }
+
+        const high = day.temperature;
+        const low = night ? night.temperature : '--';
+        const desc = day.shortForecast;
+        const pop = day.probabilityOfPrecipitation?.value;
+        const popStr = (pop && pop > 20) ? ` · ${pop}% precip` : '';
+        const wind = day.windSpeed ? ` · wind ${day.windSpeed}` : '';
+        const chip = chipFor(desc, pop);
+        return `<li><strong>${d.label}</strong> · ${desc} · ${high}°F / ${low}°F${popStr}${wind}. <span class="chip ${chip.cls}">${chip.label}</span></li>`;
+      });
+
+      listEl.innerHTML = rows.join('');
+      statusEl.innerHTML = `Live from weather.gov · updated ${formatAgo(forecast.properties.updated)} · <a href="#" id="weather-refresh" style="color:var(--teal-deep);font-weight:600;">refresh</a>`;
+
+      document.getElementById('weather-refresh').addEventListener('click', e => {
+        e.preventDefault();
+        statusEl.textContent = 'Refreshing...';
+        loadLiveWeather();
+      });
+    } catch (err) {
+      console.error('Weather fetch failed', err);
+      statusEl.innerHTML = 'Forecast offline · <a href="#" id="weather-refresh" style="color:var(--teal-deep);font-weight:600;">try again</a>';
+      listEl.innerHTML = tripDates.map(d =>
+        `<li><strong>${d.label}</strong> · <span style="color:var(--muted)">connect to WiFi and refresh to load forecast</span></li>`
+      ).join('');
+      const btn = document.getElementById('weather-refresh');
+      if (btn) btn.addEventListener('click', e => {
+        e.preventDefault();
+        statusEl.textContent = 'Retrying...';
+        loadLiveWeather();
+      });
+    }
+  }
+
+  // Fire on load
+  loadLiveWeather();
 </script>
 
 </body>
