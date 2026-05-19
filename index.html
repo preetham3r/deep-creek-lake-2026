@@ -297,6 +297,21 @@
     margin-top: 4px;
     font-style: italic;
   }
+  .slot-action {
+    display: inline-block;
+    background: var(--navy);
+    color: var(--cream);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .slot-action:hover { background: var(--teal-deep); text-decoration: none; color: var(--cream); }
+  .slot-action.alt { background: var(--teal); }
+  .slot-action.alt:hover { background: var(--teal-deep); }
 
   /* Callouts */
   .callout {
@@ -543,7 +558,7 @@
       <span class="day-date">Fri May 22</span>
     </div>
     <h3 class="day-title">Cabin opens. Whoever wants to come early, come.</h3>
-    <span class="wx"><span class="wx-dot warm"></span>Mostly sunny · mid 70s / mid 50s · light winds</span>
+    <span class="wx" id="wx-fri"><span class="wx-dot warm" id="wx-fri-dot"></span><span id="wx-fri-text">Loading forecast…</span></span>
 
     <div class="callout callout-info" style="margin-top:0; margin-bottom:14px;">
       <strong>Check-in is Friday only.</strong> Whoever arrives Friday handles the smartlock + setup. Saturday families <strong>skip check-in entirely</strong> — door's already open, walk straight in.
@@ -553,7 +568,7 @@
       <div class="slot-time">2:00 PM</div>
       <div class="slot-body">
         <div class="slot-title">Leave Brambleton (early birds)</div>
-        <div class="slot-detail">Lighter Friday traffic west. ~3 hr 10 min drive. Arrive cabin ~5:30 PM.</div>
+        <div class="slot-detail">Lighter Friday traffic west. ~3 hr 10 min drive. Arrive cabin ~5:30 PM.<a class="slot-action nav-trigger" href="#" data-q="98 Summer Camp Lane, McHenry, MD 21541" data-label="Drive to cabin · live traffic" data-mode="directions">Check live traffic →</a></div>
       </div>
     </div>
 
@@ -589,13 +604,13 @@
       <span class="day-date">Sat May 23</span>
     </div>
     <h3 class="day-title">Rest of the group rolls in. Biryani night.</h3>
-    <span class="wx"><span class="wx-dot warm"></span>Mostly sunny · mid 70s / mid 50s · isolated PM storms possible</span>
+    <span class="wx" id="wx-sat"><span class="wx-dot warm" id="wx-sat-dot"></span><span id="wx-sat-text">Loading forecast…</span></span>
 
     <div class="slot">
       <div class="slot-time">7:30 AM</div>
       <div class="slot-body">
         <div class="slot-title">Leave Brambleton early</div>
-        <div class="slot-detail">Cabin's already open — <strong>no 4 PM check-in clock</strong>. With kids in the car, target a <strong>7–8 AM departure</strong> to beat the Memorial Day I-66 wave and arrive by lunch.<span class="note">~180 miles · 3 hr 10 min. Group text the moment you pull out.</span></div>
+        <div class="slot-detail">Cabin's already open — <strong>no 4 PM check-in clock</strong>. With kids in the car, target a <strong>7–8 AM departure</strong> to beat the Memorial Day I-66 wave and arrive by lunch.<span class="note">~180 miles · 3 hr 10 min. Group text the moment you pull out.</span><a class="slot-action nav-trigger" href="#" data-q="98 Summer Camp Lane, McHenry, MD 21541" data-label="Drive to cabin · live traffic" data-mode="directions">Check live traffic →</a></div>
       </div>
     </div>
 
@@ -663,7 +678,15 @@
       <span class="day-date">Sun May 24</span>
     </div>
     <h3 class="day-title">Forest hike, Wisp Mountain Park, cookout.</h3>
-    <span class="wx"><span class="wx-dot warm"></span>Partly sunny · upper 70s / upper 50s · slight chance PM storms</span>
+    <span class="wx" id="wx-sun"><span class="wx-dot warm" id="wx-sun-dot"></span><span id="wx-sun-text">Loading forecast…</span></span>
+
+    <div class="slot">
+      <div class="slot-time">6:30 AM</div>
+      <div class="slot-body">
+        <div class="slot-title">Swallow Falls walk-in <span style="color:var(--muted);font-weight:400;font-size:13px;">(early-bird option · 2–3 adults)</span></div>
+        <div class="slot-detail">For anyone willing to skip a sleep-in for Maryland's tallest waterfall. Drive 25 min north to <strong>Fisherman's Trail</strong>, walk in on the east bank of the Youghiogheny, see 3 of the 4 falls. 4 mi round trip, beat the 10–15 car parking limit by arriving 7 AM. Back at cabin by 10 AM in time for the family Cherry Creek hike.<div id="sf-walk-banner" style="margin-top:10px; padding:10px 12px; background:#fef6e7; border:1px solid #e8c87a; border-radius:6px; font-size:13px; line-height:1.5;"><strong>Weather check:</strong> <span id="sf-walk-status">Forecast loading…</span></div><a class="slot-action alt nav-trigger" href="#" data-q="Swallow Falls Road Fishermans Trail parking Oakland MD" data-label="Fisherman's Trail · Swallow Falls walk-in" data-mode="directions" style="margin-right:6px;">Directions →</a><a class="slot-action alt" href="https://dnr.maryland.gov/publiclands/Pages/swallow-falls-alternative-directions.aspx" target="_blank" rel="noopener">DNR official info →</a></div>
+      </div>
+    </div>
 
     <div class="slot">
       <div class="slot-time">8:00 AM</div>
@@ -737,7 +760,7 @@
       <span class="day-date">Mon May 25 · Memorial Day</span>
     </div>
     <h3 class="day-title">Lazy morning. Out by 10. Home by 2.</h3>
-    <span class="wx"><span class="wx-dot hot"></span>Sunny · low 80s / low 60s · slight chance PM storms after 2 PM</span>
+    <span class="wx" id="wx-mon"><span class="wx-dot hot" id="wx-mon-dot"></span><span id="wx-mon-text">Loading forecast…</span></span>
 
     <div class="slot">
       <div class="slot-time">7:30 AM</div>
@@ -759,7 +782,7 @@
       <div class="slot-time">10:30 AM</div>
       <div class="slot-body">
         <div class="slot-title">Drive home · ~3 hr 15 min</div>
-        <div class="slot-detail">Reverse the route: I-68 E → I-81 S → I-66 E → Brambleton. Each family leaves on their own clock — beat the Memorial Day evening crush by being on the road by 11.<span class="note">Optional Memorial Day stop: Antietam National Battlefield (Sharpsburg MD, off I-70). 30 min detour, free entry. Adds ~90 min. Any family can decide independently.</span></div>
+        <div class="slot-detail">Reverse the route: I-68 E → I-81 S → I-66 E → Brambleton. Each family leaves on their own clock — beat the Memorial Day evening crush by being on the road by 11.<span class="note">Optional Memorial Day stop: Antietam National Battlefield (Sharpsburg MD, off I-70). 30 min detour, free entry. Adds ~90 min. Any family can decide independently.</span><a class="slot-action nav-trigger" href="#" data-q="Brambleton VA 20148" data-label="Drive home · live traffic" data-mode="directions">Check live traffic →</a></div>
       </div>
     </div>
 
@@ -1119,12 +1142,21 @@
   const navWaze = document.getElementById('navWaze');
   const navCancel = document.getElementById('navCancel');
 
-  function openNav(q, label) {
+  function openNav(q, label, mode) {
     navDest.textContent = label || q;
     const encoded = encodeURIComponent(q);
-    navApple.href = `https://maps.apple.com/?q=${encoded}`;
-    navGoogle.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-    navWaze.href = `https://waze.com/ul?q=${encoded}&navigate=yes`;
+    if (mode === 'directions') {
+      // Directions URLs trigger turn-by-turn with live traffic + ETA from current location
+      navApple.href = `https://maps.apple.com/?daddr=${encoded}&dirflg=d`;
+      navGoogle.href = `https://www.google.com/maps/dir/?api=1&destination=${encoded}&travelmode=driving`;
+      navWaze.href = `https://waze.com/ul?q=${encoded}&navigate=yes`;
+      document.getElementById('navTitle').textContent = 'Get directions · live traffic';
+    } else {
+      navApple.href = `https://maps.apple.com/?q=${encoded}`;
+      navGoogle.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+      navWaze.href = `https://waze.com/ul?q=${encoded}&navigate=yes`;
+      document.getElementById('navTitle').textContent = 'Open in...';
+    }
     navOverlay.classList.add('open');
   }
   function closeNav() {
@@ -1134,7 +1166,7 @@
   document.querySelectorAll('.nav-trigger').forEach(el => {
     el.addEventListener('click', e => {
       e.preventDefault();
-      openNav(el.dataset.q, el.dataset.label);
+      openNav(el.dataset.q, el.dataset.label, el.dataset.mode);
     });
   });
   navOverlay.addEventListener('click', e => { if (e.target === navOverlay) closeNav(); });
@@ -1165,6 +1197,69 @@
       return { cls: 'chip-go', label: 'go' };
     }
 
+    function dotClassFor(temp, desc) {
+      const t = (desc || '').toLowerCase();
+      if (t.includes('storm') || t.includes('rain') || t.includes('shower')) return 'cool';
+      if (temp >= 80) return 'hot';
+      if (temp >= 65) return 'warm';
+      return 'cool';
+    }
+
+    function isDryDay(desc, pop) {
+      const t = (desc || '').toLowerCase();
+      if (t.includes('storm') || t.includes('rain') || t.includes('shower')) return false;
+      if (pop && pop > 30) return false;
+      return true;
+    }
+
+    // Per-day Plan tab chip IDs
+    const dayChipMap = {
+      '2026-05-22': 'fri',
+      '2026-05-23': 'sat',
+      '2026-05-24': 'sun',
+      '2026-05-25': 'mon'
+    };
+
+    function updatePlanChip(iso, day, night) {
+      const key = dayChipMap[iso];
+      if (!key) return null;
+      const textEl = document.getElementById(`wx-${key}-text`);
+      const dotEl = document.getElementById(`wx-${key}-dot`);
+      if (!textEl || !day) return null;
+      const high = day.temperature;
+      const low = night ? night.temperature : '--';
+      const pop = day.probabilityOfPrecipitation?.value;
+      const popStr = (pop && pop > 20) ? ` · ${pop}% precip` : '';
+      textEl.textContent = `${day.shortForecast} · ${high}°F / ${low}°F${popStr}`;
+      if (dotEl) {
+        dotEl.classList.remove('warm', 'hot', 'cool');
+        dotEl.classList.add(dotClassFor(high, day.shortForecast));
+      }
+      return { high, low, desc: day.shortForecast, pop, dry: isDryDay(day.shortForecast, pop) };
+    }
+
+    function updateSwallowFallsRecommendation(conditionsByDate) {
+      const banner = document.getElementById('sf-walk-banner');
+      const status = document.getElementById('sf-walk-status');
+      if (!banner || !status) return;
+      const sun = conditionsByDate['2026-05-24'];
+      const sat = conditionsByDate['2026-05-23'];
+      // Sunday early bird is the slot — judge based on Sunday's forecast
+      if (!sun) {
+        status.textContent = 'Forecast loading…';
+        return;
+      }
+      if (sun.dry) {
+        banner.style.borderColor = '#2f855a';
+        banner.style.background = '#dcfce7';
+        status.innerHTML = `<strong style="color:#2f855a;">Conditions look good ·</strong> Sunday forecast: ${sun.desc} · ${sun.high}°F. Trail should be dry enough.`;
+      } else {
+        banner.style.borderColor = '#c53030';
+        banner.style.background = '#fee2e2';
+        status.innerHTML = `<strong style="color:#c53030;">Skip Sunday ·</strong> Forecast: ${sun.desc}, ${sun.pop || 'high'}% precip. Standing water + crossings get sketchy when wet. ${sat?.dry ? `Saturday looks drier (${sat.desc}, ${sat.high}°F) — early arrivals could swap it there.` : ''}`;
+      }
+    }
+
     function formatAgo(iso) {
       const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
       if (mins < 1) return 'just now';
@@ -1187,9 +1282,14 @@
       const forecast = await forecastRes.json();
 
       const periods = forecast.properties.periods;
+      const conditionsByDate = {};
       const rows = tripDates.map(d => {
         const day = periods.find(p => p.isDaytime && p.startTime.startsWith(d.iso));
         const night = periods.find(p => !p.isDaytime && p.startTime.startsWith(d.iso));
+
+        // Update Plan tab chip
+        const cond = updatePlanChip(d.iso, day, night);
+        if (cond) conditionsByDate[d.iso] = cond;
 
         if (!day) {
           return `<li><strong>${d.label}</strong> · <span style="color:var(--muted)">forecast not yet available — check back closer to trip</span></li>`;
@@ -1206,6 +1306,7 @@
       });
 
       listEl.innerHTML = rows.join('');
+      updateSwallowFallsRecommendation(conditionsByDate);
       statusEl.innerHTML = `Live from weather.gov · updated ${formatAgo(forecast.properties.updated)} · <a href="#" id="weather-refresh" style="color:var(--teal-deep);font-weight:600;">refresh</a>`;
 
       document.getElementById('weather-refresh').addEventListener('click', e => {
@@ -1219,6 +1320,13 @@
       listEl.innerHTML = tripDates.map(d =>
         `<li><strong>${d.label}</strong> · <span style="color:var(--muted)">connect to WiFi and refresh to load forecast</span></li>`
       ).join('');
+      // Plan tab chips
+      ['fri','sat','sun','mon'].forEach(k => {
+        const t = document.getElementById(`wx-${k}-text`);
+        if (t) t.textContent = 'Forecast offline · tap Practical → refresh';
+      });
+      const sfStatus = document.getElementById('sf-walk-status');
+      if (sfStatus) sfStatus.textContent = 'Forecast offline — check live weather before deciding.';
       const btn = document.getElementById('weather-refresh');
       if (btn) btn.addEventListener('click', e => {
         e.preventDefault();
