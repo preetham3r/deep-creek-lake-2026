@@ -313,6 +313,57 @@
   .slot-action.alt { background: var(--teal); }
   .slot-action.alt:hover { background: var(--teal-deep); }
 
+  /* Cocktail cards */
+  .cocktail-section {
+    margin-top: 24px;
+  }
+  .cocktail-section:first-of-type { margin-top: 0; }
+  .cocktail-section-label {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .cocktail {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(11,37,69,0.04);
+  }
+  .cocktail h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--navy);
+    margin: 0 0 8px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .cocktail-ingredients {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+    padding: 10px 12px;
+    background: var(--sand);
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .cocktail-method {
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 1.55;
+  }
+  .cocktail-method strong {
+    color: var(--teal-deep);
+  }
+
   /* Callouts */
   .callout {
     border-radius: 10px;
@@ -538,6 +589,7 @@
   <button class="tab active" data-tab="plan" role="tab">The Plan</button>
   <button class="tab" data-tab="route" role="tab">Route &amp; Stops</button>
   <button class="tab" data-tab="practical" role="tab">Practical</button>
+  <button class="tab" data-tab="drinks" role="tab">Drinks</button>
 </nav>
 
 <!-- ============ PLAN ============ -->
@@ -1087,6 +1139,90 @@
     </div>
 
   </div>
+</section>
+
+<!-- ============ DRINKS ============ -->
+<section class="panel" id="drinks" role="tabpanel">
+
+  <div class="section-eyebrow">Cocktails · Cabin Bar</div>
+  <h2 class="section-title">Deep Creek Drinks</h2>
+  <p class="section-sub">Five cocktails, two batching jars per side. Prep the morning of, shake to order.</p>
+
+  <div class="cocktail-section">
+    <div class="cocktail-section-label">Gin</div>
+
+    <article class="cocktail">
+      <h4>Pineapple Jalapeño Smash</h4>
+      <div class="cocktail-ingredients">2 oz gin · 1 oz fresh pineapple juice · 0.5 oz lime · 0.5 oz simple syrup · 2 jalapeño slices</div>
+      <div class="cocktail-method"><strong>Muddle</strong> jalapeño in shaker. Add gin, pineapple, lime, simple, ice. <strong>Shake hard.</strong> Double strain over fresh ice. Garnish with pineapple wedge and jalapeño coin.</div>
+    </article>
+
+    <article class="cocktail">
+      <h4>Blackberry Basil Smash</h4>
+      <div class="cocktail-ingredients">2 oz gin · 0.75 oz lemon · 0.5 oz simple syrup · 4 blackberries · 5 basil leaves</div>
+      <div class="cocktail-method"><strong>Muddle</strong> blackberries and basil. Add gin, lemon, simple, ice. <strong>Shake hard.</strong> Double strain over crushed ice. Basil sprig and blackberry on top.</div>
+    </article>
+
+    <article class="cocktail">
+      <h4>Pineapple Mint Cooler</h4>
+      <div class="cocktail-ingredients">2 oz gin · 1.5 oz pineapple juice · 0.5 oz lime · 0.5 oz simple syrup · 6 mint leaves · splash of soda</div>
+      <div class="cocktail-method"><strong>Lightly muddle</strong> mint. Add everything except soda with ice. <strong>Shake.</strong> Strain over fresh ice. Top with soda. Mint sprig.</div>
+    </article>
+  </div>
+
+  <div class="cocktail-section">
+    <div class="cocktail-section-label">Bourbon</div>
+
+    <article class="cocktail">
+      <h4>Old Fashioned</h4>
+      <div class="cocktail-ingredients">2 oz bourbon · 0.25 oz simple syrup · 2 dashes Angostura bitters · orange peel</div>
+      <div class="cocktail-method"><strong>Stir</strong> bourbon, simple, bitters with ice 20 seconds. Strain over one large cube. <strong>Express</strong> orange peel, drop in.</div>
+    </article>
+
+    <article class="cocktail">
+      <h4>Blackberry Bourbon Smash</h4>
+      <div class="cocktail-ingredients">2 oz bourbon · 0.75 oz lemon · 0.5 oz simple syrup · 4 blackberries · 5 mint leaves</div>
+      <div class="cocktail-method"><strong>Muddle</strong> blackberries and mint. Add bourbon, lemon, simple, ice. <strong>Shake hard.</strong> Double strain over crushed ice. Mint sprig and blackberry on top.</div>
+    </article>
+  </div>
+
+  <div class="card" style="margin-top:28px;">
+    <h3>Shopping list</h3>
+    <p class="card-sub">Buy in VA before leaving — McHenry Beverage Shoppe is the backup.</p>
+    <ul class="list-tight">
+      <li><strong>Spirits + mixers:</strong> gin, bourbon, Angostura bitters, soda water.</li>
+      <li><strong>Produce:</strong> pineapple (or 100% pineapple juice), blackberries, jalapeños, lemons, limes, oranges, mint, basil.</li>
+      <li><strong>Pantry:</strong> sugar for simple syrup (1:1 sugar to water, boil and cool).</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Batching plan · prep the morning of</h3>
+    <p class="card-sub">Four mason jars handle every smash. Label them. Shake to order with spirit and ice.</p>
+    <ul class="list-tight">
+      <li><strong>Jar 1 · jalapeño smash base:</strong> muddled jalapeño + lime + simple + pineapple juice.</li>
+      <li><strong>Jar 2 · blackberry basil base:</strong> muddled blackberries + basil + lemon + simple.</li>
+      <li><strong>Jar 3 · blackberry bourbon base:</strong> muddled blackberries + mint + lemon + simple.</li>
+      <li><strong>Jar 4 · pineapple mint cooler base:</strong> pineapple + lime + simple + lightly bruised mint.</li>
+    </ul>
+    <div class="callout callout-info" style="margin-top:14px; margin-bottom:0;">
+      Old Fashioned is one at a time — no prep needed. Build in the glass.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>Quick ratios for scaling</h3>
+    <p class="card-sub">Multiply by headcount, divide into batches.</p>
+    <div style="background:var(--sand); border-radius:10px; padding:16px; text-align:center;">
+      <div style="font-family:'Fraunces', Georgia, serif; font-size:22px; color:var(--navy); font-weight:600; line-height:1.4;">
+        2 oz spirit<br>
+        0.75 oz citrus<br>
+        0.5 oz simple
+      </div>
+      <div style="font-size:12px; color:var(--muted); margin-top:10px; letter-spacing:0.08em; text-transform:uppercase;">per smash · per drink</div>
+    </div>
+  </div>
+
 </section>
 
 <footer>
