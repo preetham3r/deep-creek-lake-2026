@@ -960,6 +960,17 @@
     </div>
 
     <div class="card">
+      <h3>What to wear · live</h3>
+      <p class="card-sub" id="wear-status">Updates with the forecast above. Mountain mornings run 10–15°F cooler than daily high.</p>
+      <ul class="list-tight" id="wear-list">
+        <li><strong>Fri May 22</strong> · loading...</li>
+        <li><strong>Sat May 23</strong> · loading...</li>
+        <li><strong>Sun May 24 (hike day)</strong> · loading...</li>
+        <li><strong>Mon May 25</strong> · loading...</li>
+      </ul>
+    </div>
+
+    <div class="card">
       <h3>Pack from home</h3>
       <p class="card-sub">Indian groceries for biryani Saturday + chicken grill Sunday. Walmart McHenry won't have any of it.</p>
       <ul class="list-tight">
@@ -1261,6 +1272,78 @@
       }
     }
 
+    // Per-day dressing recommendation based on forecast + activity type
+    function dressingFor(iso, cond) {
+      if (!cond) return null;
+      const { high, low, desc, pop, dry } = cond;
+      const t = (desc || '').toLowerCase();
+      const wet = !dry || (pop && pop > 30);
+      const stormy = t.includes('storm') || t.includes('thunderstorm');
+      const chillyMorn = low && low <= 55;
+      const hotDay = high >= 80;
+      const warmDay = high >= 72 && high < 80;
+      const coolDay = high < 72;
+
+      // Day-specific activity profiles
+      const dayProfile = {
+        '2026-05-22': { label: 'Friday · travel + cabin', activity: 'travel' },
+        '2026-05-23': { label: 'Saturday · drive + lake walk + cabin', activity: 'mixed' },
+        '2026-05-24': { label: 'Sunday · hike + karts + grill', activity: 'hike' },
+        '2026-05-25': { label: 'Monday · pack + drive home', activity: 'travel' }
+      };
+      const p = dayProfile[iso];
+      if (!p) return null;
+
+      const parts = [];
+
+      // Base layer
+      if (hotDay) parts.push('t-shirt + shorts');
+      else if (warmDay) parts.push('t-shirt + shorts or light pants');
+      else parts.push('long sleeve + pants');
+
+      // Morning layer
+      if (chillyMorn) parts.push('add a fleece or hoodie for early morning');
+
+      // Activity-specific
+      if (p.activity === 'hike') {
+        parts.push('sturdy closed-toe shoes (no flip-flops)');
+        parts.push('hiking socks + bug spray on legs');
+      }
+      if (p.activity === 'travel') {
+        parts.push('comfortable for 3 hr in the car');
+      }
+      if (p.activity === 'mixed') {
+        parts.push('sneakers for the lake walk · swimsuit underneath if anyone wants toes in the water');
+      }
+
+      // Rain
+      if (stormy) parts.push('light rain shell · keep one in the car all weekend');
+      else if (wet) parts.push('light rain jacket just in case');
+
+      // Evening fire pit (every night)
+      parts.push('fleece or hoodie for evening fire pit (drops to ' + (low || 'low 50s') + '°F)');
+
+      return { label: p.label, items: parts };
+    }
+
+    function updateDressingCard(conditionsByDate) {
+      const list = document.getElementById('wear-list');
+      const status = document.getElementById('wear-status');
+      if (!list) return;
+      const order = ['2026-05-22', '2026-05-23', '2026-05-24', '2026-05-25'];
+      const rows = order.map(iso => {
+        const cond = conditionsByDate[iso];
+        const rec = dressingFor(iso, cond);
+        if (!rec || !cond) {
+          const dayLabel = { '2026-05-22':'Fri May 22','2026-05-23':'Sat May 23','2026-05-24':'Sun May 24 (hike day)','2026-05-25':'Mon May 25' }[iso];
+          return `<li><strong>${dayLabel}</strong> · <span style="color:var(--muted)">forecast not yet available</span></li>`;
+        }
+        return `<li><strong>${rec.label}</strong> · ${rec.items.join(' · ')}.</li>`;
+      });
+      list.innerHTML = rows.join('');
+      if (status) status.textContent = 'Auto-updated from the live forecast above. Mountain mornings run 10–15°F cooler than daily high.';
+    }
+
     function formatAgo(iso) {
       const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
       if (mins < 1) return 'just now';
@@ -1308,6 +1391,7 @@
 
       listEl.innerHTML = rows.join('');
       updateSwallowFallsRecommendation(conditionsByDate);
+      updateDressingCard(conditionsByDate);
       statusEl.innerHTML = `Live from weather.gov · updated ${formatAgo(forecast.properties.updated)} · <a href="#" id="weather-refresh" style="color:var(--teal-deep);font-weight:600;">refresh</a>`;
 
       document.getElementById('weather-refresh').addEventListener('click', e => {
@@ -1328,6 +1412,17 @@
       });
       const sfStatus = document.getElementById('sf-walk-status');
       if (sfStatus) sfStatus.textContent = 'Forecast offline — check live weather before deciding.';
+      const wearList = document.getElementById('wear-list');
+      const wearStatus = document.getElementById('wear-status');
+      if (wearList) {
+        wearList.innerHTML = [
+          { l: 'Fri May 22 · travel + cabin' },
+          { l: 'Sat May 23 · drive + lake walk + cabin' },
+          { l: 'Sun May 24 (hike day)' },
+          { l: 'Mon May 25 · drive home' }
+        ].map(d => `<li><strong>${d.l}</strong> · <span style="color:var(--muted)">connect + refresh forecast to load recommendations</span></li>`).join('');
+      }
+      if (wearStatus) wearStatus.textContent = 'Forecast offline — refresh when back online.';
       const btn = document.getElementById('weather-refresh');
       if (btn) btn.addEventListener('click', e => {
         e.preventDefault();
